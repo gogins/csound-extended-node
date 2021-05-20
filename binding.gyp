@@ -35,7 +35,6 @@
                     [
                         '/usr/local/include/csound/',
                         '/usr/include/csound/',
-                        '../CsoundAC/',
                     ],
                 }
             ],

@@ -4,6 +4,26 @@ Michael Gogins<br>
 https://github.com/gogins<br>
 http://michaelgogins.tumblr.com
 
+## License
+
+csound-node-extended is copyright (c) 2021 by Michael Gogins and 
+other contributors to the csound-node-extended repository.
+
+csound-node-extended is free software; you can redistribute it
+and/or modify them under the terms of the GNU Lesser General Public
+License as published by the Free Software Foundation; either
+version 2.1 of the License, or (at your option) any later version.
+
+csound-node-extended is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with this software; if not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+02110-1301 USA
+
 ## Introduction
 
 [NW.js][nwjs], which used to be called Node-Webkit, is a system for building 
@@ -24,7 +44,7 @@ performing Csound pieces, but also for developing standalone applications that
 incorporate Csound. It can be used, for example, to develop sound art 
 installations, visual music, or kiosk-type applications.
 
-The `csound_extended/docs/message.html` piece is an example of an HTML file
+The `csound_extended-examples/docs/message.html` piece is an example of an HTML file
 that embeds not only Csound, but also a Csound orchestra and score. See below 
 for how to run such pieces.
 
@@ -35,7 +55,8 @@ JavaScript, user-defined HTML user interfaces, 3-dimensional animated computer
 graphics, and much more. For a full list of capabilities currently implemented 
 in HTML5, see [this HTML5 test page][html5test].
 
-Please log any bug reports or requests for enhancements at https://github.com/gogins/csound-extended/issues.
+Please log any bug reports or requests for enhancements at 
+https://github.com/gogins/csound-extended-node/issues.
 
 ## Usage
 
@@ -80,20 +101,27 @@ configure your editor.
 
 ## Installation
 
-See the installation instructions in the csound-extended main README.md.
-
-You may need to ensure that the csound.node shared libary is in a directory included 
-in the NODE_PATH environment variable.
+Simply make sure that the csound.node shared libary is in a directory included 
+in your NODE_PATH environment variable.
 
 ## Building
 
 1. Node.js and npm must be installed, not from any Linux 
 package repository, but according to the instructions for binary archives at 
 https://github.com/nodejs/help/wiki/Installation. When that has been done, 
-execute `npm install -g node-gyp` and `npm install -g node-addon-api`. Also 
-put node-gyp into your executable PATH.
+execute:
+```
+npm install -g node-gyp 
+npm install -g node-addon-api
+```
 
-4. The following environment variables MUST be set before building, perhaps in
+Also, put node-gyp into your executable PATH.
+
+2. Build dependencies must be installed: Csound (on Linux, Csound must be 
+   built from sources (https://github.com/csound/csound)) and 
+   csound-extended (https://github.com/gogins/csound-extended).
+
+3. The following environment variables MUST be set before building, perhaps in
 your .profile script. Obviously, modify the paths as required to suit your
 home directory and installation details. These are exported in `build-env.sh` 
 which you can source in your .profile script.
@@ -106,6 +134,11 @@ RAWWAVE_PATH=/home/mkg/stk/rawwaves
 export PATH=/usr/local/lib/node-v12.14.1-linux-x64/bin:${PATH}
 unset NODE_ADDON_API_INCLUDE
 export NODE_ADDON_API_INCLUDE=/usr/local/lib/node-v12.14.1-linux-x64/lib/node_modules/node-addon-api
+
+4. To actually build, execute:
+```
+node-gyp rebuild
+```
 
 If csound.node fails to build: 
 
