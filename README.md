@@ -87,8 +87,47 @@ in the NODE_PATH environment variable.
 
 ## Building
 
-See the build instructions in the csound-extended main README.md.
+1. Node.js and npm must be installed, not from any Linux 
+package repository, but according to the instructions for binary archives at 
+https://github.com/nodejs/help/wiki/Installation. When that has been done, 
+execute `npm install -g node-gyp` and `npm install -g node-addon-api`. Also 
+put node-gyp into your executable PATH.
 
+4. The following environment variables MUST be set before building, perhaps in
+your .profile script. Obviously, modify the paths as required to suit your
+home directory and installation details. These are exported in `build-env.sh` 
+which you can source in your .profile script.
+
+```
+CSOUND_SRC_ROOT=/home/mkg/csound-extended/dependencies/csound
+NODE_PATH=/home/mkg/csound/csound/frontends/nwjs/build/Release
+OPCODE6DIR64=/usr/local/lib/csound/plugins64-6.0
+RAWWAVE_PATH=/home/mkg/stk/rawwaves
+export PATH=/usr/local/lib/node-v12.14.1-linux-x64/bin:${PATH}
+unset NODE_ADDON_API_INCLUDE
+export NODE_ADDON_API_INCLUDE=/usr/local/lib/node-v12.14.1-linux-x64/lib/node_modules/node-addon-api
+
+If csound.node fails to build: 
+
+1.  You may need to add the NPM bin directory to your PATH variable so that 
+    CMake can find node-gyp.
+    
+2.  You may need to manually configure `csound.node/binding.gyp` to explicly
+    include the directory containing `napi.h` more or less as follows:
+    ```
+    'target_defaults': 
+    {
+       "cflags!": [ "-fno-exceptions" ],
+        "cflags_cc!": [ "-fno-exceptions" ],
+        "include_dirs": 
+        [
+            ## This is theoretically required but causes the build to fail: 
+            ## "<!@(node -p \"require('node-addon-api').include\")",
+            ## This does work but must be manually configured here:
+            "/usr/local/lib/node-v12.14.1-linux-x64/lib/node_modules/node-addon-api",
+        ],
+    ```
+    
 [csound]: http://csound.github.io/
 [nwjs]: http://nwjs.io/
 [iojs]: https://iojs.org/en/index.html/
