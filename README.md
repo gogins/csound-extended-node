@@ -109,8 +109,7 @@ export NODE_ADDON_API_INCLUDE=/usr/local/lib/node-v12.14.1-linux-x64/lib/node_mo
 
 If csound.node fails to build: 
 
-1.  You may need to add the NPM bin directory to your PATH variable so that 
-    CMake can find node-gyp.
+1.  You may need to add the NPM bin directory to your PATH variable.
     
 2.  You may need to manually configure `csound.node/binding.gyp` to explicly
     include the directory containing `napi.h` more or less as follows:
