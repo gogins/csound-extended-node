@@ -48,6 +48,7 @@ static void csoundMessageCallback_(CSOUND *csound__, int attr, const char *forma
 }
 
 Napi::Number Cleanup(const Napi::CallbackInfo &info) {
+    std::fprintf(stderr, "jscsound: Cleanup.\n");
     Napi::Env env = info.Env();
     int result = csound_.Cleanup();
     return Napi::Number::New(env, result);
@@ -155,6 +156,7 @@ void Message(const Napi::CallbackInfo &info) {
 }
 
 Napi::Number Perform(const Napi::CallbackInfo &info) {
+    std::fprintf(stderr, "jscsound: Perform.\n");
     Napi::Env env = info.Env();
     int result = csound_.Perform();
     return Napi::Number::New(env, result);
@@ -174,6 +176,7 @@ Napi::Number ReadScore(const Napi::CallbackInfo &info) {
 }
 
 void Reset(const Napi::CallbackInfo &info) {
+    std::fprintf(stderr, "jscsound: Reset.\n");
     csound_.Reset();
 }
 
@@ -243,14 +246,17 @@ void SetScorePending(const Napi::CallbackInfo &info) {
 }
 
 Napi::Number Start(const Napi::CallbackInfo &info) {
+    std::fprintf(stderr, "jscsound: Start.\n");
     Napi::Env env = info.Env();
     int result = csound_.Start();
     return Napi::Number::New(env, result);
 }
 
 void Stop(const Napi::CallbackInfo &info) {
+    std::fprintf(stderr, "jscsound: Stop.\n");
     csound_.Stop();
-    //csound_.Join();
+    // This used to be commented out, not sure why. Always crashed on restart.
+    csound_.Join();
 }
 
 void uv_csound_message_callback(uv_async_t *handle)
@@ -268,7 +274,7 @@ void uv_csound_message_callback(uv_async_t *handle)
 
 void on_exit()
 {
-    std::fprintf(stderr, "on_exit\n");
+    std::fprintf(stderr, "jscsound: on_exit\n");
     uv_close((uv_handle_t *)&uv_csound_message_async, 0);
 }
 
