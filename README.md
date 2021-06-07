@@ -6,10 +6,10 @@ http://michaelgogins.tumblr.com
 
 ## License
 
-csound-node-extended is copyright (c) 2021 by Michael Gogins and 
+csound-extended-node is copyright (c) 2021 by Michael Gogins and 
 other contributors to the csound-node-extended repository.
 
-csound-node-extended is free software; you can redistribute it
+csound-extended-node is free software; you can redistribute it
 and/or modify them under the terms of the GNU Lesser General Public
 License as published by the Free Software Foundation; either
 version 2.1 of the License, or (at your option) any later version.
