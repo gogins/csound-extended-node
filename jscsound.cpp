@@ -33,6 +33,13 @@ static Napi::FunctionReference persistent_message_callback;
 static concurrent_queue<char *> csound_messages_queue;
 static uv_async_t uv_csound_message_async;
 
+
+static void message_(const char *text) {
+    std::fprintf(stderr, text, "");
+    csound_messages_queue.push(strdup(text));
+    uv_async_send(&uv_csound_message_async);
+}
+
 /**
  * As this will often be called from Csound's native performance thread, 
  * it is not safe to call from here back into JavaScript. Hence, we enqueue 
@@ -43,12 +50,11 @@ static void csoundMessageCallback_(CSOUND *csound__, int attr, const char *forma
 {
     char buffer[0x2000];
     std::vsprintf(buffer, format, valist);
-    csound_messages_queue.push(strdup(buffer));
-    uv_async_send(&uv_csound_message_async);
+    message_(buffer);
 }
 
 Napi::Number Cleanup(const Napi::CallbackInfo &info) {
-    std::fprintf(stderr, "jscsound: Cleanup.\n");
+    message_("Info: jscsound: Cleanup.\n");
     Napi::Env env = info.Env();
     int result = csound_.Cleanup();
     return Napi::Number::New(env, result);
@@ -156,7 +162,7 @@ void Message(const Napi::CallbackInfo &info) {
 }
 
 Napi::Number Perform(const Napi::CallbackInfo &info) {
-    std::fprintf(stderr, "jscsound: Perform.\n");
+    message_("Info: jscsound: Perform.\n");
     Napi::Env env = info.Env();
     int result = csound_.Perform();
     return Napi::Number::New(env, result);
@@ -176,7 +182,7 @@ Napi::Number ReadScore(const Napi::CallbackInfo &info) {
 }
 
 void Reset(const Napi::CallbackInfo &info) {
-    std::fprintf(stderr, "jscsound: Reset.\n");
+    message_("Info: jscsound: Reset.\n");
     csound_.Reset();
 }
 
@@ -216,7 +222,6 @@ void SetDoGitCommit(const Napi::CallbackInfo &info) {
 }
 
 void SetMessageCallback(const Napi::CallbackInfo &info) {
-    // std::fprintf(stderr, "SetMessageCallback\n");
     Napi::Function csound_message_callback = info[0].As<Napi::Function>();
     persistent_message_callback = Napi::Persistent(csound_message_callback);
     persistent_message_callback.SuppressDestruct();
@@ -246,21 +251,21 @@ void SetScorePending(const Napi::CallbackInfo &info) {
 }
 
 Napi::Number Start(const Napi::CallbackInfo &info) {
-    std::fprintf(stderr, "jscsound: Start.\n");
+    message_("Info: jscsound: Start.\n");
     Napi::Env env = info.Env();
-    if (csound_.IsPlaying() == true) {
-        std::fprintf(stderr, "jscsound: Already playing.\n");
-        return Napi::Number::New(env, -1);
-       
-    }
     int result = csound_.Start();
+    if (result == -1) {
+        message_("Warning: jscsound: Still playing? Try stopping and restarting.\n");
+        csound_.Stop();
+        csound_.Join();
+        result = csound_.Start();
+    }
     return Napi::Number::New(env, result);
 }
 
 void Stop(const Napi::CallbackInfo &info) {
-    std::fprintf(stderr, "jscsound: Stop.\n");
+    message_("Info: jscsound: Stop.\n");
     csound_.Stop();
-    // This used to be commented out, not sure why. Always crashed on restart.
     csound_.Join();
 }
 
@@ -268,7 +273,6 @@ void uv_csound_message_callback(uv_async_t *handle)
 {
     char *message = nullptr;
     while (csound_messages_queue.try_pop(message)) {
-        // std::fprintf(stderr, "uv_csound_message_callback message: %s\n", message);
         Napi::Env env = persistent_message_callback.Env();
         Napi::HandleScope handle_scope(env);
         std::vector<napi_value> args = {Napi::String::New(env, message)};
@@ -279,7 +283,7 @@ void uv_csound_message_callback(uv_async_t *handle)
 
 void on_exit()
 {
-    std::fprintf(stderr, "jscsound: on_exit\n");
+    message_("Info: jscsound: on_exit\n");
     uv_close((uv_handle_t *)&uv_csound_message_async, 0);
 }
 
@@ -412,7 +416,7 @@ Napi::Object Initialize(Napi::Env env, Napi::Object exports) {
                 Napi::Function::New(env, Stop));
     exports.Set(Napi::String::New(env, "stop"),
                 Napi::Function::New(env, Stop));
-    std::fprintf(stderr, "csound.node initialized.\n");
+    std::fprintf(stderr, "Csound.node initialized.\n");
     return exports;
 }
 
