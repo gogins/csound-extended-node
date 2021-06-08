@@ -134,7 +134,7 @@ RAWWAVE_PATH=/home/mkg/stk/rawwaves
 export PATH=/usr/local/lib/node-v12.14.1-linux-x64/bin:${PATH}
 unset NODE_ADDON_API_INCLUDE
 export NODE_ADDON_API_INCLUDE=/usr/local/lib/node-v12.14.1-linux-x64/lib/node_modules/node-addon-api
-
+```
 4. To actually build, execute:
 ```
 node-gyp rebuild
