@@ -248,6 +248,11 @@ void SetScorePending(const Napi::CallbackInfo &info) {
 Napi::Number Start(const Napi::CallbackInfo &info) {
     std::fprintf(stderr, "jscsound: Start.\n");
     Napi::Env env = info.Env();
+    if (csound_.IsPlaying() == true) {
+        std::fprintf(stderr, "jscsound: Already playing.\n");
+        return Napi::Number::New(env, -1);
+       
+    }
     int result = csound_.Start();
     return Napi::Number::New(env, result);
 }
@@ -337,6 +342,8 @@ Napi::Object Initialize(Napi::Env env, Napi::Object exports) {
                 Napi::Function::New(env, InputMessage));
     exports.Set(Napi::String::New(env, "inputMessage"),
                 Napi::Function::New(env, InputMessage));
+    exports.Set(Napi::String::New(env, "IsPlaying"),
+                Napi::Function::New(env, IsPlaying));
     exports.Set(Napi::String::New(env, "IsScorePending"),
                 Napi::Function::New(env, IsScorePending));
     exports.Set(Napi::String::New(env, "isScorePending"),
