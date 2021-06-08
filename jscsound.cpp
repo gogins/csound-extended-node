@@ -33,7 +33,6 @@ static Napi::FunctionReference persistent_message_callback;
 static concurrent_queue<char *> csound_messages_queue;
 static uv_async_t uv_csound_message_async;
 
-
 static void message_(const char *text) {
     std::fprintf(stderr, text, "");
     csound_messages_queue.push(strdup(text));
