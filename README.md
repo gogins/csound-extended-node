@@ -26,14 +26,14 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
 
 ## Introduction
 
-[NW.js][nwjs], which used to be called Node-Webkit, is a system for building 
+[NW.js](http://nwjs.io/), which used to be called Node-Webkit, is a system for building 
 applications for personal computers and workstations based on Web browser 
 technology. Typically the user interface is defined in HTML and the program 
 logic is defined in JavaScript. C++ addons, which expose JavaScript functions 
 that call into C++ libraries, also can be used. The application executes in an 
 embedded Web browser based on Google Chrome.
 
-csound.node is a C++ addon for NW.js that embeds [Csound][csound] into the 
+csound.node is a C++ addon for NW.js that embeds [Csound](http://csound.github.io/) into the 
 JavaScript context of Web pages running in NW.js. Such pages can call core 
 methods of the Csound API as member functions of a `csound` object that 
 belongs to the window. The csound object also can execute Python, LuaJIT, or 
@@ -53,7 +53,7 @@ computer platforms, the build steps are simple, and the end product makes all
 of the myriad capabilities of HTML5 available to Csound pieces, including 
 JavaScript, user-defined HTML user interfaces, 3-dimensional animated computer
 graphics, and much more. For a full list of capabilities currently implemented 
-in HTML5, see [this HTML5 test page][html5test].
+in HTML5, see [this HTML5 test page](https://html5test.com/).
 
 Please log any bug reports or requests for enhancements at 
 https://github.com/gogins/csound-extended-node/issues.
@@ -159,12 +159,4 @@ If csound.node fails to build:
             "/usr/local/lib/node-v12.14.1-linux-x64/lib/node_modules/node-addon-api",
         ],
     ```
-    
-[csound]: http://csound.github.io/
-[nwjs]: http://nwjs.io/
-[iojs]: https://iojs.org/en/index.html/
-[msvs]: https://www.visualstudio.com/
-[html5test]: https://html5test.com/
-[gcc]: https://gcc.gnu.org/
-[python]: http://www.python.org/
-[nw-gyp]: https://github.com/nwjs/nw-gyp/
+
