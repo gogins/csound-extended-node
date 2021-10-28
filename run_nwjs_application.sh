@@ -39,4 +39,4 @@ EOM
 printf -v json_text "$json_format" $1 $2 $2
 echo "$json_text" | tee package.json
 # Change this if necessary to your nw pathname, and omit or modify the ALSA flags.
-~/nwjs/nw --context-mixed --experimental-modules --alsa-input-device=plughw:1,0 --alsa-output-device=plughw:1,0 --device-scale-factor=2 $3
+~/nwjs/nw --context-mixed --experimental-modules --alsa-input-device=plughw:2,0 --alsa-output-device=plughw:2,0 --device-scale-factor=2 $3
