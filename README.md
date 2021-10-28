@@ -1,4 +1,5 @@
 # csound.node
+![GitHub All Releases (total)](https://img.shields.io/github/downloads/gogins/csound-extended-node/total.svg)<br>
 
 Michael Gogins<br>
 https://github.com/gogins<br>
