@@ -17,6 +17,10 @@
             ## "/usr/local/lib/node-v12.14.1-linux-x64/lib/node_modules/node-addon-api",
             '<!@(printf "%s" "$NODE_ADDON_API_INCLUDE")'
         ],
+        'defines': 
+        [
+            'NAPI_DISABLE_CPP_EXCEPTIONS',
+        ],
         'conditions': 
         [
             ['OS=="linux"',
@@ -38,7 +42,46 @@
                     ],
                 }
             ],
-        ]
+            ['OS=="mac"',
+                {
+                    'cflags': 
+                    [
+                        '-std=c++14',
+                        '-fno-exceptions',
+                        '-Wno-deprecated-declarations',
+                        '-Wno-register',
+                        '-fPIC',
+                    ],
+                    'cflags_cc': 
+                    [
+                        '-std=c++14',
+                        '-fno-exceptions',
+                        '-Wno-deprecated-declarations',
+                        '-Wno-register',
+                        '-fPIC',
+                    ],
+                    'link_settings': 
+                    {
+                        'libraries': 
+                        [
+                          '/Users/michaelgogins/Library/Frameworks/CsoundLib64.framework/Versions/6.0/CsoundLib64',
+                          '-lpthread',
+                        ],
+                    },
+                    'include_dirs': 
+                    [
+                        '/usr/local/include/csound/',
+                        '/usr/local/include/',
+                        '/usr/include/csound/',
+                        '/Users/michaelgogins/Library/Frameworks/CsoundLib64.framework/Versions/6.0/Headers/',
+                        '/opt/homebrew/Cellar/ecl/21.2.1_1/include/',
+                        '/opt/homebrew/Cellar/gmp/6.2.1_1/include/',
+                        '/opt/homebrew/Cellar/bdw-gc/8.0.6/include/',
+                        '/opt/homebrew/lib/node_modules/node-addon-api/',
+                    ],
+                }
+            ],
+        ],
     },
     'targets': 
     [

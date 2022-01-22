@@ -9,7 +9,6 @@
 #pragma GCC diagnostic ignored "-Wunused-variable"
 
 #include <CsoundProducer.hpp>
-#include <ecl/ecl.h>
 
 // Null from ecl/cons.h conflicts with Null from napi.h.
 #ifdef Null

@@ -5,6 +5,9 @@
 # command.go.subsystem.$(file.patterns.html)=0
 # Similar customization could be done in other text editors. The purpose of this code is to
 # automatically generate a NW.js application manifest for the current HTML file.
+# Arguments to this script are $1 HTML filename, $2 title, $3 application path.
+export NODE_PATH=(pwd)/build/Release
+echo "$NODE_PATH: ${NODE_PATH}"
 echo ps -ef | fgrep "*.exe"
 killall -q -9 exe
 echo Building package.json file...
@@ -39,4 +42,4 @@ EOM
 printf -v json_text "$json_format" $1 $2 $2
 echo "$json_text" | tee package.json
 # Change this if necessary to your nw pathname, and omit or modify the ALSA flags.
-~/nwjs/nw --context-mixed --experimental-modules --alsa-input-device=plughw:2,0 --alsa-output-device=plughw:2,0 --device-scale-factor=2 $3
+open -a nwjs --args --context-mixed --experimental-modules $3 
