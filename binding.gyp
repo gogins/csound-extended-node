@@ -64,20 +64,18 @@
                     {
                         'libraries': 
                         [
-                          '/Users/michaelgogins/Library/Frameworks/CsoundLib64.framework/Versions/6.0/CsoundLib64',
+                          '/Library/Frameworks/CsoundLib64.framework/Versions/6.0/CsoundLib64',
                           '-lpthread',
                         ],
                     },
                     'include_dirs': 
                     [
-                        '/usr/local/include/csound/',
-                        '/usr/local/include/',
-                        '/usr/include/csound/',
-                        '/Users/michaelgogins/Library/Frameworks/CsoundLib64.framework/Versions/6.0/Headers/',
+                        '/Library/Frameworks/CsoundLib64.framework/Versions/6.0/Headers/',
                         '/opt/homebrew/Cellar/ecl/21.2.1_1/include/',
                         '/opt/homebrew/Cellar/gmp/6.2.1_1/include/',
                         '/opt/homebrew/Cellar/bdw-gc/8.0.6/include/',
                         '/opt/homebrew/lib/node_modules/node-addon-api/',
+                        '/Users/michaelgogins/csound-ac/CsoundAC/',
                     ],
                 }
             ],
