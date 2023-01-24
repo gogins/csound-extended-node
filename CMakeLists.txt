@@ -1,0 +1,36 @@
+cmake_minimum_required(VERSION 3.15)
+cmake_policy(SET CMP0091 NEW)
+cmake_policy(SET CMP0042 NEW)
+
+set(CMAKE_OSX_ARCHITECTURES x86_64;arm64)
+
+project (csound-node)
+
+set(CMAKE_CXX_STANDARD 17)
+
+add_definitions(-DNAPI_VERSION=4)
+
+include_directories(${CMAKE_JS_INC})
+
+file(GLOB SOURCE_FILES "*.cpp")
+
+add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${CMAKE_JS_SRC})
+set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" SUFFIX ".node")
+target_link_libraries(${PROJECT_NAME} ${CMAKE_JS_LIB}  
+  /library/Frameworks/CsoundLib64.framework/Versions/6.0/CsoundLib64 
+  pthread
+  )
+target_include_directories(${PROJECT_NAME} PRIVATE 
+  ${CMAKE_SOURCE_DIR}/node_modules/node-addon-api 
+  /Library/Frameworks/CsoundLib64.framework/Versions/6.0/Headers 
+  /opt/homebrew/Cellar/ecl/21.2.1_1/include/ 
+  /opt/homebrew/Cellar/gmp/6.2.1_1/include/ 
+  /opt/homebrew/Cellar/bdw-gc/8.0.6/include/' 
+  /Users/michaelgogins/csound-ac/CsoundAC/ 
+  )
+
+
+if(MSVC AND CMAKE_JS_NODELIB_DEF AND CMAKE_JS_NODELIB_TARGET)
+  # Generate node.lib
+  execute_process(COMMAND ${CMAKE_AR} /def:${CMAKE_JS_NODELIB_DEF} /out:${CMAKE_JS_NODELIB_TARGET} ${CMAKE_STATIC_LINKER_FLAGS})
+endif()

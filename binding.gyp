@@ -46,6 +46,8 @@
                 {
                     'cflags': 
                     [
+                        '-target x86_64-apple-darwin-macho',
+                        '-mcpu=x86-64',
                         '-std=c++14',
                         '-fno-exceptions',
                         '-Wno-deprecated-declarations',
@@ -54,6 +56,8 @@
                     ],
                     'cflags_cc': 
                     [
+                        '-target x86_64-apple-darwin-macho',
+                        '-mcpu=x86-64',
                         '-std=c++14',
                         '-fno-exceptions',
                         '-Wno-deprecated-declarations',
