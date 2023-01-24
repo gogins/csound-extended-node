@@ -15,7 +15,7 @@ and/or modify them under the terms of the GNU Lesser General Public
 License as published by the Free Software Foundation; either
 version 2.1 of the License, or (at your option) any later version.
 
-csound-node-extended is distributed in the hope that it will be useful,
+csound-extended-node is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU Lesser General Public License for more details.
@@ -37,8 +37,7 @@ embedded Web browser based on Google Chrome.
 csound.node is a C++ addon for NW.js that embeds [Csound](http://csound.github.io/) into the 
 JavaScript context of Web pages running in NW.js. Such pages can call core 
 methods of the Csound API as member functions of a `csound` object that 
-belongs to the window. The csound object also can execute Python, LuaJIT, or 
-Embeddable Common Lisp code.
+belongs to the window.
 
 Therefore, NW.js with `csound.node` can be used not only for composing and 
 performing Csound pieces, but also for developing standalone applications that 
@@ -102,62 +101,38 @@ configure your editor.
 
 ## Installation
 
-Simply make sure that the csound.node shared libary is in a directory included 
-in your NODE_PATH environment variable.
+Simply make sure that the `csound.node` shared libary is in a directory included 
+in your `NODE_PATH` environment variable.
 
 ## Building
 
-1. Node.js and npm must be installed, not from any Linux 
-package repository, but according to the instructions for binary archives at 
-https://github.com/nodejs/help/wiki/Installation. When that has been done, 
-execute:
-```
-npm install -g node-gyp 
-npm install -g node-addon-api
-```
+csound-extended-node is built in the "npm way" but uses cmake.js rather than 
+node-gyp to compile the addon.
 
-Also, put node-gyp into your executable PATH.
+1. Make a local clone of this repository.
 
-2. Build dependencies must be installed: Csound (on Linux, Csound must be 
-   built from sources (https://github.com/csound/csound)) and 
-   csound-extended (https://github.com/gogins/csound-extended).
+2. Install Csound from `https://csound.com/download.html`. On Linux, it is 
+   easy to build Csound from source code.
 
-3. The following environment variables MUST be set before building, perhaps in
-your .profile script. Obviously, modify the paths as required to suit your
-home directory and installation details. These are exported in `build-env.sh` 
-which you can source in your .profile script.
+3. Install npm.
+
+4. Install node-addon-api: `npm install -g node-addon-api`.
+
+5. Install cmake-js: `npm install -g cmake-js`.
+
+6. The following environment variable MUST be set before using, perhaps in
+your .profile script. `NODE_PATH` must be the pathname to the directory 
+where csound.node has been built. The example is for macOS, so you must 
+change this to suit your environment.
 
 ```
-CSOUND_SRC_ROOT=/home/mkg/csound-extended/dependencies/csound
-NODE_PATH=/home/mkg/csound/csound/frontends/nwjs/build/Release
-OPCODE6DIR64=/usr/local/lib/csound/plugins64-6.0
-RAWWAVE_PATH=/home/mkg/stk/rawwaves
-export PATH=/usr/local/lib/node-v12.14.1-linux-x64/bin:${PATH}
-unset NODE_ADDON_API_INCLUDE
-export NODE_ADDON_API_INCLUDE=/usr/local/lib/node-v12.14.1-linux-x64/lib/node_modules/node-addon-api
-```
-4. To actually build, execute:
-```
-node-gyp rebuild
+NODE_PATH=/Users/michaelgogins/csound-extended-node/build/release
 ```
 
-If csound.node fails to build: 
-
-1.  You may need to add the NPM bin directory to your PATH variable.
-    
-2.  You may need to manually configure `csound.node/binding.gyp` to explicly
-    include the directory containing `napi.h` more or less as follows:
-    ```
-    'target_defaults': 
-    {
-       "cflags!": [ "-fno-exceptions" ],
-        "cflags_cc!": [ "-fno-exceptions" ],
-        "include_dirs": 
-        [
-            ## This is theoretically required but causes the build to fail: 
-            ## "<!@(node -p \"require('node-addon-api').include\")",
-            ## This does work but must be manually configured here:
-            "/usr/local/lib/node-v12.14.1-linux-x64/lib/node_modules/node-addon-api",
-        ],
-    ```
+7. CMakeLists.txt is configured for building on macOS. You will need to 
+   change the library and include directories configuration to suit your 
+   own environment. To actually build execute:
+```
+cmake.js rebuild
+```
 
