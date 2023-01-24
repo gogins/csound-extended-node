@@ -4,7 +4,7 @@ cmake_policy(SET CMP0042 NEW)
 
 set(CMAKE_OSX_ARCHITECTURES x86_64;arm64)
 
-project (csound-node)
+project (csound)
 
 set(CMAKE_CXX_STANDARD 17)
 
