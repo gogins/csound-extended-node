@@ -8,9 +8,9 @@ http://michaelgogins.tumblr.com
 ## Deprecation Notice
 
 Currently, I am not maintaining this repository. In general, my priority is 
-composing music, not programming. However, I create open-source GitHub 
-repositories in order to share tools that I create for composing. As my 
-working methods change, so do the tools I create. 
+composing music, not programming. However, I do create open-source GitHub 
+repositories in order to share tools that I make for composing. As my 
+working methods change, so do the tools I make. 
 
 I now use [csound-webserver-opcodes](https://github.com/gogins/csound-webserver-opcodes), 
 which run as plugin opcodes inside Csound, instead of csound-node to support 
