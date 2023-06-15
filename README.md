@@ -5,6 +5,19 @@ Michael Gogins<br>
 https://github.com/gogins<br>
 http://michaelgogins.tumblr.com
 
+## Deprecation Notice
+
+Currently, I am not maintaining this repository. In general, my priority is 
+composing music, not programming. However, I create open-source GitHub 
+repositories in order to share tools that I create for composing. As my 
+working methods change, so do the tools I create. 
+
+I now use [csound-webserver-opcodes](https://github.com/gogins/csound-webserver-opcodes), 
+which run as plugin opcodes inside Csound, instead of csound-node to support 
+the use of HTML and JavaScript in Csound pieces.
+
+However, this repository will remain available.
+
 ## License
 
 csound-extended-node is copyright (c) 2021 by Michael Gogins and 
