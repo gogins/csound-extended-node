@@ -24,7 +24,7 @@ target_link_libraries(${PROJECT_NAME} ${CMAKE_JS_LIB}
   pthread
   )
 target_include_directories(${PROJECT_NAME} PRIVATE 
-  ${CMAKE_SOURCE_DIR}/node_modules/node-addon-api 
+  /opt/homebrew/lib/node_modules/node-addon-api/ 
   /Library/Frameworks/CsoundLib64.framework/Versions/6.0/Headers 
   /opt/homebrew/Cellar/ecl/21.2.1_1/include/ 
   /opt/homebrew/Cellar/gmp/6.2.1_1/include/ 

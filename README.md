@@ -5,19 +5,6 @@ Michael Gogins<br>
 https://github.com/gogins<br>
 http://michaelgogins.tumblr.com
 
-## Deprecation Notice
-
-Currently, I am not maintaining this repository. In general, my priority is 
-composing music, not programming. However, I do create open-source GitHub 
-repositories in order to share tools that I make for composing. As my 
-working methods change, so do the tools I make. 
-
-I now use [csound-webserver-opcodes](https://github.com/gogins/csound-webserver-opcodes), 
-which run as plugin opcodes inside Csound, instead of csound-node to support 
-the use of HTML and JavaScript in Csound pieces.
-
-However, this repository will remain available.
-
 ## License
 
 csound-extended-node is copyright (c) 2021 by Michael Gogins and 
@@ -57,7 +44,7 @@ performing Csound pieces, but also for developing standalone applications that
 incorporate Csound. It can be used, for example, to develop sound art 
 installations, visual music, or kiosk-type applications.
 
-The `csound_extended-examples/docs/message.html` piece is an example of an HTML file
+The `csound-examples/docs/message.html` piece is an example of an HTML file
 that embeds not only Csound, but also a Csound orchestra and score. See below 
 for how to run such pieces.
 
@@ -73,51 +60,47 @@ https://github.com/gogins/csound-extended-node/issues.
 
 ## Usage
 
-From the command line, execute `nw <directory>`, where the directory contains the
-JSON-formatted manifest of a NW.js application based on an HTML file that embeds a
-Csound piece. See the NW.js documention for more information on the manifest and
-packaging NW.js applications. An example manifest (must be named package.json) for
-running "Message.html" with nw and csound.node is:
+A composition that uses csound.node is a regular NW.js application. This is 
+rather different from a typical desktop application. 
 
-<pre>
+Currently the following steps work on macOS, but similar steps would be taken 
+on other platforms. The build uses 
+[nw-builder](https://github.com/nwutils/nw-builder).
+
+For a sample NW.js composition that you can use as a template for your own 
+pieces, see Poustinia-v5c.
+
+1. Create an application directory containing a `src` subdirectory and a 
+   `build` subdirectory. 
+2. Change to the `src` directory.
+3. Create your piece as an .html file.
+4. Also in the `src` directory place any scripts, images, or other assets that 
+   will be loaded from your piece.
+2. Create a `package.json` application manifest similar to this:
+```
 {
-  "main": "Message.html",
-  "name": "Message",
-  "description": "Piece for Csound and HTML5",
+  "name": "MyPiece",
+  "main": "MyPiece.html",
   "version": "0.1.0",
   "keywords": [ "Csound", "node-webkit" ],
-  "nodejs": true,
-  "node-remote": "http://<all-urls>/*",
   "window": {
-    "title": "Message",
-    "icon": "link.png",
     "toolbar": false,
     "frame": false,
     "maximized": true,
     "position": "mouse",
     "fullscreen": true
-  },
-  "webkit": {
-    "plugin": true
   }
 }
-</pre>
+```
+4. Run `pnpm add nw-builder -D` to install nwbuild.
+5. To create a temporary build and play or debug your piece, run 
+   `pnpm nwbuild --glob=false --mode=run --version=latest --flavor=sdk .` 
+   to both install NW.js (in the `cache`` subdirectory) and run the composition app.
+6. To build your piece as a standalone application that can be installed, run
+   `pnpm nwbuild --glob=false --mode=build --version=latest --flavor=sdk --outDir=../build .`
+7. You can then play your piece at any time with `open ../build/MyPiece.app`.
 
-To run your Csound pieces easily in nw, you can use a menu shortcut and script 
-in your text editor to automate the construction and deployment of the 
-manifest file, or you can use a template package.json and make a copy of your
-piece with the name given in the manifest every time you want to run the piece.
-
-The `run_nwjs_application.sh` script can be used in SciTE to automatically run 
-the current HTML file in NW.js. See the comments in this script for how to 
-configure your editor.
-
-## Installation
-
-Simply make sure that the `csound.node` shared libary is in a directory included 
-in your `NODE_PATH` environment variable.
-
-## Building
+## Building `csound.node`
 
 csound-extended-node is built in the "npm way" but uses cmake.js rather than 
 node-gyp to compile the addon.
@@ -134,12 +117,12 @@ node-gyp to compile the addon.
 5. Install cmake-js: `npm install -g cmake-js`.
 
 6. The following environment variable MUST be set before using, perhaps in
-your .profile script. `NODE_PATH` must be the pathname to the directory 
+your .profile script. `NODE_PATH` must include the pathname to the directory 
 where csound.node has been built. The example is for macOS, so you must 
 change this to suit your environment.
 
 ```
-NODE_PATH=/Users/michaelgogins/csound-extended-node/build/release
+NODE_PATH=/usr/local/lib
 ```
 
 7. CMakeLists.txt is configured for building on macOS. You will need to 
