@@ -55,6 +55,13 @@ JavaScript, user-defined HTML user interfaces, 3-dimensional animated computer
 graphics, and much more. For a full list of capabilities currently implemented 
 in HTML5, see [this HTML5 test page](https://html5test.com/).
 
+In addition, the Csound API in csound.node is compatible with the Csound API 
+defined in [csound-wasm](https://github.com/gogins/csound-wasm) and 
+used by [cloud-5](https://github.com/gogins/cloud-5). Therefore, many pieces 
+can be rendered in either environment, although csound.node does afford 
+additional capabilities such as accessing the local filesystem, loading plugin 
+opcodes, and running somewhat faster.
+
 Please log any bug reports or requests for enhancements at 
 https://github.com/gogins/csound-extended-node/issues.
 
